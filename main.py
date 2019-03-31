@@ -1,6 +1,10 @@
 import random as rd
 import platform as pf
 import subprocess as sp
+from gpuinfo import GPUInfo as gp
+import sys
+
+sys.tracebacklimit = 0
 
 def linuxCpuInfo(target):
 	command = "cat /proc/cpuinfo"
@@ -90,8 +94,21 @@ def OS():
 	else:
 		print ("I Have no idea what the hell you're using")
 
+def gpu() :
+	system = pf.system()
+	if "Linux" in system:
+		print ("Linux gpu") # Future update
+	elif "Windows" in system:
+		print ("Windows GPU") # Future Update
+	elif "Mac" in system:
+		print ("mac GPU") # Future Update
+
+
 rude = [machine,
 		network,
 		OS,
-		cpu]
+		cpu,
+		gpu]
+
+
 rd.choice(rude)()
