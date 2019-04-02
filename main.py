@@ -16,6 +16,8 @@ def linuxCpuInfo(target):
 			return i[1]
 
 def cpu():
+	if debugMode:
+		print ("[] function cpu")
 	system = pf.system()
 	if "Linux" in system:
 		info = linuxCpuInfo("model name")
@@ -33,12 +35,16 @@ def cpu():
 				print ("I prefer Threadripper, name's cooler and model numbers are easier.")
 			elif "Atom" in info:
 				print ("Wait, someone actually use a Atom?")
+	elif "Windows" in system:
+		print ("Windows")
 
 def machine():
+	if debugMode:
+		print ("[] function machine")
 	machine = pf.machine()
-	if machine == "x86_64":
+	if machine == "x86_64" or machine == "AMD64":
 		print ("eww... x86_64? Are you afriad to use arm?")
-	elif machine == "x86":
+	elif machine == "x86" or machine == "AMD64":
 		print ("Still using x86 cpu? switch to a 64 bit already you old man")
 	elif "arm" in machine:
 		print ("low power? more like low performance")
@@ -48,9 +54,13 @@ def machine():
 		print ("Unknown Processor? How's the performance?")
 
 def network():
+	if debugMode:
+		print ("[]function network")
 	print ("So... your network name is",pf.node(), ", aren't you?")
 
 def OS():
+	if debugMode:
+		print ("[] function OS")
 	system = pf.system()
 	if "Linux" in system or "linux" in system:
 		distro = pf.linux_distribution()[0]
@@ -95,6 +105,8 @@ def OS():
 		print ("I Have no idea what the hell you're using")
 
 def gpu() :
+	if debugMode:
+		print ("[] function gpu")
 	system = pf.system()
 	if "Linux" in system:
 		print ("Linux gpu") # Future update
@@ -110,5 +122,8 @@ rude = [machine,
 		cpu,
 		gpu]
 
+debugMode = False
 
+if "-D" in sys.argv:
+	debugMode = True
 rd.choice(rude)()
