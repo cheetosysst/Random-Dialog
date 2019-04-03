@@ -1,11 +1,10 @@
 import random as rd
 import platform as pf
 import subprocess as sp
-from gpuinfo import GPUInfo as gp
+from gpuinfo import GPUInfo as gp # pip3 install gpuinfo
 import sys
 
-sys.tracebacklimit = 0
-
+# INFO GATHERING
 def linuxCpuInfo(target):
 	command = "cat /proc/cpuinfo"
 	all_info = sp.check_output(command, shell=True).strip().decode('utf-8')
@@ -15,6 +14,9 @@ def linuxCpuInfo(target):
 			i = i.split(": ")
 			return i[1]
 
+# Functions 
+
+# CPU Function: Check CPU by OS
 def cpu():
 	if debugMode:
 		print ("[] function cpu")
@@ -38,6 +40,7 @@ def cpu():
 	elif "Windows" in system:
 		print ("Windows")
 
+# Machine Funcion: Check machine architecture
 def machine():
 	if debugMode:
 		print ("[] function machine")
@@ -51,13 +54,15 @@ def machine():
 	elif machine == "":
 		print ("Trying to hide something? Like your machine type?")
 	else :
-		print ("Unknown Processor? How's the performance?")
+		print ("Unknown architecture? WOW")
 
+# Network Function
 def network():
 	if debugMode:
 		print ("[]function network")
 	print ("So... your network name is",pf.node(), ", aren't you?")
 
+# OS Function: Most of them are guessed, since I don't use most f them and checking one by one take time
 def OS():
 	if debugMode:
 		print ("[] function OS")
@@ -104,6 +109,7 @@ def OS():
 	else:
 		print ("I Have no idea what the hell you're using")
 
+# GPU Funtion: Python doesn't support checking for iGPU, still working on it
 def gpu() :
 	if debugMode:
 		print ("[] function gpu")
@@ -115,15 +121,19 @@ def gpu() :
 	elif "Mac" in system:
 		print ("mac GPU") # Future Update
 
-
+# List of function, some is not include because they are simply just information gathering
 rude = [machine,
 		network,
 		OS,
 		cpu,
 		gpu]
 
-debugMode = False
+# Debug mode: Show current funtion
+debugMode = False # By Default, debug mode is set to False
 
+# Arguments check
 if "-D" in sys.argv:
 	debugMode = True
+
+# Run
 rd.choice(rude)()
